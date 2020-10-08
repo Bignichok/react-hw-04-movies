@@ -18,34 +18,69 @@ export const fetchTrendingMovies = async () => {
 // .then(({ data }) => data)
 // .catch((err) => console.log(err));
 
-export const fetchMovieById = (id) => {
-  return Axios.get(`${BASIC_URL}movie/${id}?api_key=${API_KEY}&language=en-US`)
-    .then((resp) => resp)
-    .then(({ data }) => data)
-    .catch((err) => console.log(err));
+export const fetchMovieById = async (id) => {
+  try {
+    const response = await Axios.get(
+      `${BASIC_URL}movie/${id}?api_key=${API_KEY}&language=en-US`
+    );
+    return response.data;
+  } catch (err) {
+    throw new Error(`this movie was deleted`);
+  }
+
+  // return Axios.get(`${BASIC_URL}movie/${id}?api_key=${API_KEY}&language=en-US`)
+  //   .then((resp) => resp)
+  //   .then(({ data }) => data)
+  //   .catch((err) => console.log(err));
 };
 
-export const fetchByQuery = (query) => {
-  return Axios.get(
-    `${BASIC_URL}search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=true&query=${query}`
-  )
-    .then((resp) => resp)
-    .then(({ data }) => data)
-    .catch((err) => console.log(err));
+export const fetchByQuery = async (query) => {
+  try {
+    const response = await Axios.get(
+      `${BASIC_URL}search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=true&query=${query}`
+    );
+    return response.data;
+  } catch (err) {
+    throw new Error(console.log(err));
+  }
+
+  // return Axios.get(
+  //   `${BASIC_URL}search/movie?api_key=${API_KEY}&language=en-US&page=1&include_adult=true&query=${query}`
+  // )
+  //   .then((resp) => resp)
+  //   .then(({ data }) => data)
+  //   .catch((err) => console.log(err));
 };
 
-export const fetchCast = (id) => {
-  return Axios.get(`${BASIC_URL}movie/${id}/credits?api_key=${API_KEY}`)
-    .then((resp) => resp)
-    .then(({ data }) => data)
-    .catch((err) => console.log(err));
+export const fetchCast = async (id) => {
+  try {
+    const response = await Axios.get(
+      `${BASIC_URL}movie/${id}/credits?api_key=${API_KEY}`
+    );
+    return response.data;
+  } catch (err) {
+    throw new Error(console.log(err));
+  }
+
+  // return Axios.get(`${BASIC_URL}movie/${id}/credits?api_key=${API_KEY}`)
+  //   .then((resp) => resp)
+  //   .then(({ data }) => data)
+  //   .catch((err) => console.log(err));
 };
 
-export const fetchReviews = (id) => {
-  return Axios.get(
-    `${BASIC_URL}movie/${id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
-  )
-    .then((resp) => resp)
-    .then(({ data }) => data)
-    .catch((err) => console.log(err));
+export const fetchReviews = async (id) => {
+  try {
+    const response = await Axios.get(
+      `${BASIC_URL}movie/${id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+    );
+    return response.data;
+  } catch (err) {
+    throw new Error(console.log(err));
+  }
+  // return Axios.get(
+  //   `${BASIC_URL}movie/${id}/reviews?api_key=${API_KEY}&language=en-US&page=1`
+  // )
+  //   .then((resp) => resp)
+  //   .then(({ data }) => data)
+  //   .catch((err) => console.log(err));
 };

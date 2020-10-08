@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
 import HomePage from "./components/HomePage/HomePage";
@@ -16,6 +16,7 @@ function App() {
           <Route exact path={routes.home} component={HomePage} />
           <Route exact path={routes.movies} component={MoviesPage} />
           <Route path={routes.movieDetails} component={MoviesDetailsPage} />
+          <Redirect to={routes.home} />
         </Switch>
       </main>
     </div>

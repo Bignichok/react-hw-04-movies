@@ -37,3 +37,7 @@
   text-transform: uppercase;
   color: #ff4c4c;
 }
+
+.blockLink {
+  display: block;
+}

@@ -1,39 +1,50 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { fetchByQuery } from "../../api/tmdbAPI";
+import getQueryParams from "../../utils/getQueryParams";
+import SearchForm from "../SearchForm/SearchForm";
+import Spinner from "../Spinner/Spinner";
 
 class MoviesPage extends Component {
   state = {
-    searchQuery: "",
     movies: [],
+    loading: false,
   };
 
+  componentDidMount() {
+    const query = getQueryParams(this.props.location.search);
+    if (query.query) {
+      this.fetchWithQuery(query.query);
+    }
+  }
+
   componentDidUpdate(prevProps, prevState) {
-    const prevQuery = prevState.searchQuery;
-    const nextQuery = this.state.searchQuery;
+    const { query: prevQuery } = getQueryParams(prevProps.location.search);
+    const { query: nextQuery } = getQueryParams(this.props.location.search);
+
     if (prevQuery !== nextQuery && nextQuery.length > 2) {
       this.fetchWithQuery(nextQuery);
     }
   }
 
   fetchWithQuery = (query) => {
-    fetchByQuery(query).then((data) => {
-      this.setState({ movies: data.results });
+    this.setState({ loading: true });
+    fetchByQuery(query)
+      .then((data) => {
+        this.setState({ movies: data.results });
+      })
+      .finally(() => this.setState({ loading: false }));
+  };
+
+  submitQueryChangedHandler = (query) => {
+    this.props.history.push({
+      ...this.props.location,
+      search: `query=${query}`,
     });
   };
 
-  changeHandler = (e) => {
-    const value = e.target.value;
-    this.setState({ searchQuery: value });
-  };
-
-  submitHandler = (e) => {
-    e.preventDefault();
-    this.setState({ searchQuery: "" });
-  };
-
   render() {
-    const { movies } = this.state;
+    const { movies, loading } = this.state;
 
     const moviesListItems =
       movies.length > 0 &&
@@ -48,15 +59,8 @@ class MoviesPage extends Component {
       });
     return (
       <div>
-        <form onSubmit={this.submitHandler}>
-          <input
-            type="text"
-            value={this.state.searchQuery}
-            onChange={this.changeHandler}
-          ></input>
-          <button type="submit">Search</button>
-        </form>
-        <ul>{moviesListItems}</ul>
+        <SearchForm onSubmit={this.submitQueryChangedHandler} />
+        {loading ? <Spinner /> : <ul>{moviesListItems}</ul>}
       </div>
     );
   }

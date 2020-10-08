@@ -3,7 +3,8 @@ import { fetchMovieById } from "../../api/tmdbAPI";
 import { NavLink, Route } from "react-router-dom";
 import styles from "./MovieDetailsPage.module.css";
 import Cast from "../Cast/Cast";
-import routes from "../../routes";
+import Reviews from "../Reviews/Reviews";
+import noPosterImage from "../../utils/no-poster.jpg";
 
 class MoviesDetailsPage extends Component {
   state = {
@@ -19,14 +20,14 @@ class MoviesDetailsPage extends Component {
   render() {
     const { film } = this.state;
     const {
-      poster_path = "",
-      title = "title",
-      original_title = "title",
-      budget = 0,
-      overview = "overview",
-      release_date = 0,
-      runtime = 0,
-      vote_average = 0,
+      poster_path,
+      title,
+      original_title,
+      budget,
+      overview,
+      release_date,
+      runtime,
+      vote_average,
     } = film;
     return (
       <div className={styles.movieDetailsContainer}>
@@ -34,7 +35,15 @@ class MoviesDetailsPage extends Component {
           <h3 className={styles.title}>{title && original_title}</h3>
 
           <div className={styles.imageWrp}>
-            <img width="240px" src={`https://image.tmdb.org/t/p/w500/${poster_path}`} />
+            <img
+              width="240px"
+              src={
+                poster_path
+                  ? `https://image.tmdb.org/t/p/w500/${poster_path}`
+                  : noPosterImage
+              }
+              alt={title && original_title}
+            />
           </div>
 
           <div className={styles.textContent}>
@@ -56,10 +65,16 @@ class MoviesDetailsPage extends Component {
         </div>
 
         <div>
-          <NavLink to={`${this.props.match.url}/cast`}>Cast</NavLink>
+          <NavLink className={styles.blockLink} to={`${this.props.match.url}/cast`}>
+            Cast
+          </NavLink>
+          <NavLink className={styles.blockLink} to={`${this.props.match.url}/reviews`}>
+            Reviews
+          </NavLink>
         </div>
 
         <Route path={`${this.props.match.path}/cast`} component={Cast}></Route>
+        <Route path={`${this.props.match.path}/reviews`} component={Reviews}></Route>
       </div>
     );
   }

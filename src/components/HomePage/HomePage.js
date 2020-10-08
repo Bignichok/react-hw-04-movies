@@ -2,20 +2,25 @@ import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
 import { fetchTrendingMovies } from "../../api/tmdbAPI";
 import routes from "../../routes";
+import Spinner from "../Spinner/Spinner";
 
 class HomePage extends Component {
   state = {
     films: [],
+    loading: false,
   };
 
   componentDidMount() {
-    fetchTrendingMovies().then((data) => {
-      this.setState({ films: data.results });
-    });
+    this.setState({ loading: true });
+    fetchTrendingMovies()
+      .then((data) => {
+        this.setState({ films: data.results });
+      })
+      .finally(() => this.setState({ loading: false }));
   }
 
   render() {
-    const { films } = this.state;
+    const { films, loading } = this.state;
 
     const filmListItems = films.map((film) => {
       return (
@@ -29,7 +34,7 @@ class HomePage extends Component {
     return (
       <div>
         <h2>Trending this week</h2>
-        <ul>{filmListItems}</ul>
+        {loading ? <Spinner /> : <ul>{filmListItems}</ul>}
       </div>
     );
   }
