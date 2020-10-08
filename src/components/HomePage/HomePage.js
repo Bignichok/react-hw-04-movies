@@ -25,7 +25,12 @@ class HomePage extends Component {
     const filmListItems = films.map((film) => {
       return (
         <li key={film.id}>
-          <NavLink to={`${routes.movies}/${film.id}`}>
+          <NavLink
+            to={{
+              pathname: `${routes.movies}/${film.id}`,
+              state: { from: this.props.location },
+            }}
+          >
             {film.title ? film.title : film.original_name}
           </NavLink>
         </li>

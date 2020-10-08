@@ -5,6 +5,7 @@ import styles from "./MovieDetailsPage.module.css";
 import Cast from "../Cast/Cast";
 import Reviews from "../Reviews/Reviews";
 import noPosterImage from "../../utils/no-poster.jpg";
+import routes from "../../routes";
 
 class MoviesDetailsPage extends Component {
   state = {
@@ -16,6 +17,16 @@ class MoviesDetailsPage extends Component {
       this.setState({ film })
     );
   }
+
+  goBackHandler = () => {
+    const { state } = this.props.location;
+
+    if (state && state.from) {
+      this.props.history.push(state.from);
+      return;
+    }
+    this.props.history.push(routes.movies);
+  };
 
   render() {
     const { film } = this.state;
@@ -31,6 +42,7 @@ class MoviesDetailsPage extends Component {
     } = film;
     return (
       <div className={styles.movieDetailsContainer}>
+        <button onClick={this.goBackHandler}>Go back</button>
         <div className={styles.filmCard}>
           <h3 className={styles.title}>{title && original_title}</h3>
 

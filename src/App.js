@@ -1,23 +1,25 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header/Header";
-import HomePage from "./components/HomePage/HomePage";
-import MoviesPage from "./components/MoviesPage/MoviesPage";
-import MoviesDetailsPage from "./components/MovieDetailsPage/MovieDetailsPage";
-import routes from "./routes";
+import routes, { pagesRoutes } from "./routes";
+import Spinner from "./components/Spinner/Spinner";
 
 function App() {
+  const switchItems = pagesRoutes.map((route) => {
+    return <Route key={route.path} {...route} />;
+  });
+
   return (
     <div className="App">
       <Header />
       <main className="main">
-        <Switch>
-          <Route exact path={routes.home} component={HomePage} />
-          <Route exact path={routes.movies} component={MoviesPage} />
-          <Route path={routes.movieDetails} component={MoviesDetailsPage} />
-          <Redirect to={routes.home} />
-        </Switch>
+        <Suspense fallback={<Spinner />}>
+          <Switch>
+            {switchItems}
+            <Redirect to={routes.home} />
+          </Switch>
+        </Suspense>
       </main>
     </div>
   );
