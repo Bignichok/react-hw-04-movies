@@ -34,7 +34,19 @@ class Cast extends Component {
         </li>
       );
     });
-    return loading ? <Spinner /> : <ul className={styles.castList}>{castListItems}</ul>;
+    return loading ? (
+      <Spinner />
+    ) : (
+      <ul className={styles.castList}>
+        {castListItems.length ? (
+          castListItems
+        ) : (
+          <li>
+            <p>No information about cast</p>
+          </li>
+        )}
+      </ul>
+    );
   }
 }
 

@@ -6,17 +6,15 @@ import routes, { pagesRoutes } from "./routes";
 import Spinner from "./components/Spinner/Spinner";
 
 function App() {
-  const switchItems = pagesRoutes.map((route) => {
-    return <Route key={route.path} {...route} />;
-  });
-
   return (
     <div className="App">
       <Header />
       <main className="main">
         <Suspense fallback={<Spinner />}>
           <Switch>
-            {switchItems}
+            {pagesRoutes.map((route) => (
+              <Route key={route.path} {...route} />
+            ))}
             <Redirect to={routes.home} />
           </Switch>
         </Suspense>
