@@ -27,6 +27,13 @@ export const pagesRoutes = [
       )
     ),
   },
+  {
+    path: "/error",
+    label: "error",
+    component: lazy(() =>
+      import("./components/Error/Error" /* webpackChunkName: "Error" */)
+    ),
+  },
 ];
 
 export default {
@@ -35,4 +42,5 @@ export default {
   movieDetails: "/movies/:movieId",
   cast: "/movies/:movieId/cast",
   reviews: "/movies/:movieId/reviews",
+  error: "/error",
 };

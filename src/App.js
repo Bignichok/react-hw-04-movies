@@ -1,9 +1,9 @@
 import React, { Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import "./App.css";
 import Header from "./components/Header/Header";
 import routes, { pagesRoutes } from "./routes";
 import Spinner from "./components/Spinner/Spinner";
+import "./App.css";
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
             {pagesRoutes.map((route) => (
               <Route key={route.path} {...route} />
             ))}
-            <Redirect to={routes.home} />
+            <Redirect to={routes.error} />
           </Switch>
         </Suspense>
       </main>

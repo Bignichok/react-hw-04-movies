@@ -1,0 +1,26 @@
+.container {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.imgWrapper img {
+  max-width: 400px;
+}
+
+.errorTitle {
+  color: #ff4c4c;
+  font-size: 26px;
+}
+
+.errorLink {
+  color: #fff;
+  text-decoration: none;
+  padding: 10px;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 10px;
+  background-color: #ff4c4c;
+  cursor: pointer;
+  box-shadow: 5px 5px 5px rgb(224, 44, 44);
+}
