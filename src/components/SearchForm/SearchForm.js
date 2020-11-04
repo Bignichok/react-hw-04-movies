@@ -18,11 +18,12 @@ class SearchForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.submitHandler}>
+      <form onSubmit={this.state.searchQuery && this.submitHandler}>
         <input
           type="text"
           value={this.state.searchQuery}
           onChange={this.changeHandler}
+          required
         ></input>
         <button type="submit">Search</button>
       </form>
