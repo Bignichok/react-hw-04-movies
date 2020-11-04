@@ -8,7 +8,7 @@ const Error = () => {
   return (
     <div className={styles.container}>
       <div className={styles.imgWrapper}>
-        <img src={img}></img>
+        <img src={img} alt="errorIMG"></img>
       </div>
       <h1 className={styles.errorTitle}>Sorry, this page was not found:(</h1>
       <NavLink className={styles.errorLink} to={routes.home}>

@@ -22,7 +22,7 @@ class MoviesPage extends Component {
     const { query: prevQuery } = getQueryParams(prevProps.location.search);
     const { query: nextQuery } = getQueryParams(this.props.location.search);
 
-    if (prevQuery !== nextQuery && nextQuery.length > 2) {
+    if (nextQuery && prevQuery !== nextQuery && nextQuery.length > 2) {
       this.fetchWithQuery(nextQuery);
     }
   }
