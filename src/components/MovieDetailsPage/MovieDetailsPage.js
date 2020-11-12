@@ -11,6 +11,7 @@ import routes from "../../routes";
 class MoviesDetailsPage extends Component {
   state = {
     film: {},
+    from: "",
   };
 
   componentDidMount() {
@@ -41,6 +42,7 @@ class MoviesDetailsPage extends Component {
         release_date,
         runtime,
         vote_average,
+        id,
       } = film;
       return (
         <div className={styles.movieDetailsContainer}>
@@ -78,26 +80,37 @@ class MoviesDetailsPage extends Component {
             </div>
           </div>
 
-          <div>
-            <NavLink
-              className={styles.blockLink}
-              to={{
-                pathname: `${this.props.match.url}/cast`,
-                state: { from: this.props.location.state.from },
-              }}
-            >
-              Cast
-            </NavLink>
-            <NavLink
-              className={styles.blockLink}
-              to={{
-                pathname: `${this.props.match.url}/reviews`,
-                state: { from: this.props.location.state.from },
-              }}
-            >
-              Reviews
-            </NavLink>
-          </div>
+          {this.props.location.state ? (
+            <div>
+              <NavLink
+                className={styles.blockLink}
+                to={{
+                  pathname: `${this.props.match.url}/cast`,
+                  state: { from: this.props.location.state.from },
+                }}
+              >
+                Cast
+              </NavLink>
+              <NavLink
+                className={styles.blockLink}
+                to={{
+                  pathname: `${this.props.match.url}/reviews`,
+                  state: { from: this.props.location.state.from },
+                }}
+              >
+                Reviews
+              </NavLink>
+            </div>
+          ) : (
+            <div>
+              <NavLink className={styles.blockLink} to={`/movies/${id}/cast`}>
+                Cast
+              </NavLink>
+              <NavLink className={styles.blockLink} to={`/movies/${id}/reviews`}>
+                Reviews
+              </NavLink>
+            </div>
+          )}
 
           <Route path={`${this.props.match.path}/cast`} component={Cast}></Route>
           <Route path={`${this.props.match.path}/reviews`} component={Reviews}></Route>
