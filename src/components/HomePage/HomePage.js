@@ -21,25 +21,29 @@ class HomePage extends Component {
 
   render() {
     const { films, loading } = this.state;
-
-    const filmListItems = films.map((film) => {
-      return (
-        <li key={film.id}>
-          <NavLink
-            to={{
-              pathname: `${routes.movies}/${film.id}`,
-              state: { from: this.props.location },
-            }}
-          >
-            {film.title ? film.title : film.original_name}
-          </NavLink>
-        </li>
-      );
-    });
     return (
       <div>
         <h2>Trending this week</h2>
-        {loading ? <Spinner /> : <ul>{filmListItems}</ul>}
+        {loading ? (
+          <Spinner />
+        ) : (
+          !!films && (
+            <ul>
+              {films.map((film) => (
+                <li key={film.id}>
+                  <NavLink
+                    to={{
+                      pathname: `${routes.movies}/${film.id}`,
+                      state: { from: this.props.location },
+                    }}
+                  >
+                    {film.title ? film.title : film.original_name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          )
+        )}
       </div>
     );
   }

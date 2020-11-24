@@ -21,20 +21,18 @@ class Reviews extends Component {
   render() {
     const { reviews, loading } = this.state;
 
-    const reviewsListItems = reviews.map(({ id, author, content, url }) => {
-      return (
-        <li key={id}>
-          <h5>{author}</h5>
-          <p>{content}</p>
-          <a href={url}>Link for review</a>
-        </li>
-      );
-    });
-
     return loading ? (
       <Spinner />
     ) : reviews.length ? (
-      <ul>{reviewsListItems}</ul>
+      <ul>
+        {reviews.map(({ id, author, content, url }) => (
+          <li key={id}>
+            <h5>{author}</h5>
+            <p>{content}</p>
+            <a href={url}>Link for review</a>
+          </li>
+        ))}
+      </ul>
     ) : (
       <p>this movie has not review</p>
     );

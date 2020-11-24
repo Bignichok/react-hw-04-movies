@@ -18,34 +18,28 @@ class Cast extends Component {
 
   render() {
     const { cast, loading } = this.state;
-
-    const castListItems = cast.map(({ id, profile_path, name }) => {
-      return (
-        <li key={id}>
-          <img
-            width="140px"
-            height="210px"
-            src={
-              profile_path ? `https://image.tmdb.org/t/p/w500${profile_path}` : defaultImg
-            }
-            alt={name}
-          />
-          <p>{name}</p>
-        </li>
-      );
-    });
     return loading ? (
       <Spinner />
-    ) : (
+    ) : cast.length ? (
       <ul className={styles.castList}>
-        {castListItems.length ? (
-          castListItems
-        ) : (
-          <li>
-            <p>No information about cast</p>
+        {cast.map(({ id, profile_path, name }) => (
+          <li key={id}>
+            <img
+              width="140px"
+              height="210px"
+              src={
+                profile_path
+                  ? `https://image.tmdb.org/t/p/w500${profile_path}`
+                  : defaultImg
+              }
+              alt={name}
+            />
+            <p>{name}</p>
           </li>
-        )}
+        ))}
       </ul>
+    ) : (
+      <p>No information about cast</p>
     );
   }
 }
