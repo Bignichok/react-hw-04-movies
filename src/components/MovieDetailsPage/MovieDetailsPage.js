@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchMovieById } from "../../api/tmdbAPI";
+import { getMovieById } from "../../api/tmdbAPI";
 import { NavLink, Route } from "react-router-dom";
 import styles from "./MovieDetailsPage.module.css";
 import Cast from "../Cast/Cast";
@@ -15,7 +15,7 @@ class MoviesDetailsPage extends Component {
   };
 
   componentDidMount() {
-    fetchMovieById(this.props.match.params.movieId).then((film) =>
+    getMovieById(this.props.match.params.movieId).then((film) =>
       this.setState({ film })
     );
   }
@@ -64,15 +64,18 @@ class MoviesDetailsPage extends Component {
 
             <div className={styles.textContent}>
               <p>
-                <span className={styles.smallHeaders}>runtime:</span> {runtime} minutes
+                <span className={styles.smallHeaders}>runtime:</span> {runtime}{" "}
+                minutes
               </p>
               <h4 className={styles.smallHeaders}>Overview</h4>
               <p>{overview}</p>
               <p>
-                <span className={styles.smallHeaders}>release-date:</span> {release_date}
+                <span className={styles.smallHeaders}>release-date:</span>{" "}
+                {release_date}
               </p>
               <p>
-                <span className={styles.smallHeaders}>average-vote:</span> {vote_average}
+                <span className={styles.smallHeaders}>average-vote:</span>{" "}
+                {vote_average}
               </p>
               <p>
                 <span className={styles.smallHeaders}>budget:</span> {budget} $
@@ -106,14 +109,23 @@ class MoviesDetailsPage extends Component {
               <NavLink className={styles.blockLink} to={`/movies/${id}/cast`}>
                 Cast
               </NavLink>
-              <NavLink className={styles.blockLink} to={`/movies/${id}/reviews`}>
+              <NavLink
+                className={styles.blockLink}
+                to={`/movies/${id}/reviews`}
+              >
                 Reviews
               </NavLink>
             </div>
           )}
 
-          <Route path={`${this.props.match.path}/cast`} component={Cast}></Route>
-          <Route path={`${this.props.match.path}/reviews`} component={Reviews}></Route>
+          <Route
+            path={`${this.props.match.path}/cast`}
+            component={Cast}
+          ></Route>
+          <Route
+            path={`${this.props.match.path}/reviews`}
+            component={Reviews}
+          ></Route>
         </div>
       );
     } else {

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import { fetchByQuery } from "../../api/tmdbAPI";
+import { getByQuery } from "../../api/tmdbAPI";
 import getQueryParams from "../../utils/getQueryParams";
 import SearchForm from "../SearchForm/SearchForm";
 import Spinner from "../Spinner/Spinner";
@@ -31,15 +31,12 @@ class MoviesPage extends Component {
 
   fetchWithQuery = (query) => {
     this.setState({ loading: true });
-    fetchByQuery(query)
+    getByQuery(query)
       .then((data) => {
         if (!data.results.length) {
           this.setState({ showAnnouncement: true });
         } else {
-          if (this.state.showAnnouncement) {
-            this.setState({ showAnnouncement: false });
-          }
-          this.setState({ movies: data.results });
+          this.setState({ showAnnouncement: false, movies: data.results });
         }
       })
       .catch((err) => this.setState({ error: err }))
@@ -62,24 +59,22 @@ class MoviesPage extends Component {
           <Spinner />
         ) : showAnnouncement ? (
           <p>No results. Try again</p>
-        ) : (
-          !!movies && (
-            <ul>
-              {movies.map((movie) => (
-                <li key={movie.id}>
-                  <NavLink
-                    to={{
-                      pathname: `${this.props.match.path}/${movie.id}`,
-                      state: { from: this.props.location },
-                    }}
-                  >
-                    {movie.title ? movie.title : movie.original_title}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          )
-        )}
+        ) : movies.length ? (
+          <ul>
+            {movies.map((movie) => (
+              <li key={movie.id}>
+                <NavLink
+                  to={{
+                    pathname: `${this.props.match.path}/${movie.id}`,
+                    state: { from: this.props.location },
+                  }}
+                >
+                  {movie.title ? movie.title : movie.original_title}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     );
   }

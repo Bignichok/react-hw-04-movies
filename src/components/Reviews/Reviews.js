@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchReviews } from "../../api/tmdbAPI";
+import { getReviews } from "../../api/tmdbAPI";
 import Spinner from "../Spinner/Spinner";
 
 class Reviews extends Component {
@@ -9,7 +9,7 @@ class Reviews extends Component {
   };
   componentDidMount() {
     this.setState({ loading: true });
-    fetchReviews(this.props.match.params.movieId)
+    getReviews(this.props.match.params.movieId)
       .then((data) => {
         if (data.results) {
           this.setState({ reviews: data.results });
